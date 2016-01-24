@@ -7,7 +7,7 @@ import sbtunidoc.Plugin._, UnidocKeys._
 
 object FooBuild extends Build {
 
-  lazy val standardSettings = Defaults.defaultSettings ++ Seq(
+  override lazy val settings = super.settings ++ Seq(
     organization := "foo.bar",
     version := "1.0-SNAPSHOT",
 
@@ -40,19 +40,16 @@ object FooBuild extends Build {
   lazy val foo: Project = Project(
     id = "foo",
     base = file("."))
-    .settings(standardSettings)
     .settings(unidocSettings)
     .aggregate(macros, core)
 
   lazy val macros: Project = Project(
     id = "macros",
     base = file("macros"))
-    .settings(standardSettings)
 
   lazy val core: Project = Project(
     id = "core",
     base = file("core"))
-    .settings(standardSettings)
     .settings(formatSettings)
     .dependsOn(macros)
 
